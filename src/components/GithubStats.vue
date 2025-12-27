@@ -29,20 +29,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="!error && !loading" class="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 animate-fade-in-up" style="animation-delay: 0.2s">
-    <div class="px-6 py-3 bg-dark-secondary/50 backdrop-blur border border-primary/20 rounded-lg flex items-center gap-3">
-      <div class="text-3xl font-bold text-white">{{ stats.repos }}</div>
-      <div class="text-sm text-gray-400 uppercase tracking-wider font-medium text-left leading-tight">Public<br>Repos</div>
+  <div v-if="!error && !loading" class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-0 animate-fade-in-up w-full max-w-5xl mx-auto" style="animation-delay: 0.2s">
+    <div class="flex-1 px-8 py-4 flex flex-col items-center justify-center gap-2 group border-b md:border-b-0 md:border-r border-gray-800/50 last:border-0 w-full md:w-auto">
+      <div class="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-200 group-hover:scale-105 transition-transform duration-300">{{ stats.repos }}</div>
+      <div class="text-sm md:text-base text-gray-500 uppercase tracking-[0.2em] font-bold text-center">Public Repos</div>
     </div>
     
-    <div class="px-6 py-3 bg-dark-secondary/50 backdrop-blur border border-primary/20 rounded-lg flex items-center gap-3">
-      <div class="text-3xl font-bold text-white">{{ stats.followers }}</div>
-      <div class="text-sm text-gray-400 uppercase tracking-wider font-medium text-left leading-tight">GitHub<br>Followers</div>
+    <div class="flex-1 px-8 py-4 flex flex-col items-center justify-center gap-2 group border-b md:border-b-0 md:border-r border-gray-800/50 last:border-0 w-full md:w-auto">
+      <div class="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-200 group-hover:scale-105 transition-transform duration-300">{{ stats.followers }}</div>
+      <div class="text-sm md:text-base text-gray-500 uppercase tracking-[0.2em] font-bold text-center">Followers</div>
     </div>
     
-     <div class="px-6 py-3 bg-dark-secondary/50 backdrop-blur border border-primary/20 rounded-lg flex items-center gap-3">
-      <div class="text-3xl font-bold text-white">6+</div>
-      <div class="text-sm text-gray-400 uppercase tracking-wider font-medium text-left leading-tight">Years<br>Exp.</div>
+     <div class="flex-1 px-8 py-4 flex flex-col items-center justify-center gap-2 group w-full md:w-auto">
+      <div class="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-200 group-hover:scale-105 transition-transform duration-300">6+</div>
+      <div class="text-sm md:text-base text-gray-500 uppercase tracking-[0.2em] font-bold text-center">Years Exp.</div>
     </div>
   </div>
 </template>

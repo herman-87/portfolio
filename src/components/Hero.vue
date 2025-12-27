@@ -1,5 +1,5 @@
 <script setup>
-import GithubStats from './GithubStats.vue'
+
 </script>
 
 <template>
@@ -39,7 +39,7 @@ import GithubStats from './GithubStats.vue'
         </a>
       </div>
 
-      <GithubStats />
+
     </div>
   </section>
 </template>

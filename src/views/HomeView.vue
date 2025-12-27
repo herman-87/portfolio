@@ -3,6 +3,7 @@ import Hero from '../components/Hero.vue'
 import Skills from '../components/Skills.vue'
 import Projects from '../components/Projects.vue'
 import Contact from '../components/Contact.vue'
+import GithubStats from '../components/GithubStats.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -51,6 +52,14 @@ onUnmounted(() => {
     </nav>
 
     <Hero />
+    
+    <!-- Stats Section -->
+    <section class="py-10 bg-dark-secondary/20 border-y border-gray-800/50 backdrop-blur-sm relative z-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <GithubStats />
+      </div>
+    </section>
+
     <Skills />
     <Projects />
     <Contact />
