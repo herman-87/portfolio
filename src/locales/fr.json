@@ -1,0 +1,51 @@
+{
+    "nav": {
+        "home": "Accueil",
+        "stack": "Stack",
+        "work": "Projets",
+        "contact": "Contact"
+    },
+    "hero": {
+        "remote_badge": "Ouvert au télétravail 100%",
+        "role_prefix": "Développeur Backend",
+        "role_suffix": "Sénior",
+        "intro": "Spécialisé dans les solutions robustes et évolutives avec {java} et l'écosystème {spring}.",
+        "view_projects": "Voir mes projets",
+        "contact_me": "Me contacter"
+    },
+    "skills": {
+        "title_prefix": "Arsenal",
+        "title_suffix": "Technique",
+        "categories": {
+            "core": "Cœur",
+            "data": "Données",
+            "messaging": "Messagerie & Asynchrone",
+            "devops": "DevOps & Cloud",
+            "tools": "Outils"
+        }
+    },
+    "projects": {
+        "title_prefix": "Projets",
+        "title_suffix": "Sélectionnés",
+        "view_code": "Voir le code",
+        "items": {
+            "p1": {
+                "title": "Passerelle de Paiement Fintech",
+                "description": "Service de traitement des paiements robuste gérant des transactions à haute concurrence avec idempotence et détection de fraude."
+            },
+            "p2": {
+                "title": "E-commerce Microservices",
+                "description": "Architecture backend évolutive pour une plateforme e-commerce utilisant Spring Cloud, Eureka et API Gateway."
+            },
+            "p3": {
+                "title": "Moteur d'Analyse Temps Réel",
+                "description": "Système piloté par événements traitant plus d'un million d'événements par seconde pour des mises à jour de tableau de bord en temps réel."
+            }
+        }
+    },
+    "contact": {
+        "title_prefix": "Prêt à",
+        "title_suffix": "Collaborer ?",
+        "text": "Je suis actuellement disponible pour des opportunités en télétravail à 100%. Discutons de la manière dont je peux contribuer à votre architecture backend."
+    }
+}

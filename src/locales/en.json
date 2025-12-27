@@ -1,0 +1,51 @@
+{
+    "nav": {
+        "home": "Home",
+        "stack": "Stack",
+        "work": "Work",
+        "contact": "Contact"
+    },
+    "hero": {
+        "remote_badge": "Open to 100% Remote Work",
+        "role_prefix": "Senior Backend",
+        "role_suffix": "Developer",
+        "intro": "Specializing in robust, scalable solutions with {java} and the {spring}.",
+        "view_projects": "View Projects",
+        "contact_me": "Contact Me"
+    },
+    "skills": {
+        "title_prefix": "Technical",
+        "title_suffix": "Arsenal",
+        "categories": {
+            "core": "Core",
+            "data": "Data",
+            "messaging": "Messaging & Async",
+            "devops": "DevOps & Cloud",
+            "tools": "Tools"
+        }
+    },
+    "projects": {
+        "title_prefix": "Selected",
+        "title_suffix": "Projects",
+        "view_code": "View Code",
+        "items": {
+            "p1": {
+                "title": "Fintech Payment Gateway",
+                "description": "A robust payment processing service handling high-concurrency transactions with idempotency and fraud detection."
+            },
+            "p2": {
+                "title": "Microservices E-commerce",
+                "description": "Scalable backend architecture for an e-commerce platform using Spring Cloud, Eureka, and API Gateway."
+            },
+            "p3": {
+                "title": "Real-time Analytics Engine",
+                "description": "Event-driven system processing million+ events per second for real-time dashboard updates."
+            }
+        }
+    },
+    "contact": {
+        "title_prefix": "Ready to",
+        "title_suffix": "Collaborate?",
+        "text": "I am currently available for 100% remote opportunities. Let's discuss how I can contribute to your backend architecture."
+    }
+}
