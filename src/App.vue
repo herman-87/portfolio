@@ -11,6 +11,7 @@
 import NavBar from './components/NavBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
+import SkillsSection from './components/SkillsSection.vue'  
 </script>
 
 <template>
@@ -29,6 +30,7 @@ import AboutSection from './components/AboutSection.vue'
   <main id="app-main">
     <HeroSection />
     <AboutSection />
+    <SkillsSection />
     <!-- Les prochaines sections seront ajoutées ici -->
   </main>
 </template>
