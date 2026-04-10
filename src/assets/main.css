@@ -1,0 +1,222 @@
+/* ============================================
+   RESET — Unifier le rendu entre navigateurs
+   ============================================ */
+
+/*
+  Le sélecteur * cible TOUS les éléments HTML.
+  ::before et ::after ciblent les pseudo-éléments
+  (on les utilisera plus tard pour la timeline).
+*/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   VARIABLES CSS — Notre palette de design
+   ============================================ */
+
+/*
+  :root cible l'élément <html>.
+  On y déclare toutes nos variables pour les
+  réutiliser partout avec var(--nom-variable).
+*/
+:root {
+    /* Couleurs principales */
+    --color-bg: #0d0d0d;
+    /* Fond noir profond */
+    --color-bg-secondary: #1a1a1a;
+    /* Fond légèrement plus clair (cards) */
+    --color-bg-tertiary: #252525;
+    /* Fond encore plus clair (hover) */
+
+    --color-text: #ffffff;
+    /* Texte principal blanc */
+    --color-text-secondary: #a0a0a0;
+    /* Texte secondaire gris clair */
+    --color-text-muted: #666666;
+    /* Texte discret gris foncé */
+
+    --color-primary: #6db33f;
+    /* Vert Spring Boot */
+    --color-primary-light: #77bc1f;
+    /* Vert clair (hover, accents) */
+    --color-primary-dark: #5a9a32;
+    /* Vert foncé (active, ombres) */
+
+    /* Bordures et séparations */
+    --color-border: #2a2a2a;
+    /* Bordure subtile */
+
+    /* Typographie */
+    --font-mono: 'Fira Code', monospace;
+    /* Titres, éléments tech */
+    --font-sans: 'Inter', sans-serif;
+    /* Texte courant */
+
+    /* Espacements (système de 8px) */
+    --space-xs: 0.25rem;
+    /* 4px */
+    --space-sm: 0.5rem;
+    /* 8px */
+    --space-md: 1rem;
+    /* 16px */
+    --space-lg: 2rem;
+    /* 32px */
+    --space-xl: 4rem;
+    /* 64px */
+    --space-2xl: 6rem;
+    /* 96px */
+
+    /* Bordures arrondies */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+    /* Cercle parfait */
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 500ms ease;
+}
+
+/* ============================================
+   STYLES DE BASE — Appliqués à tout le site
+   ============================================ */
+
+/*
+  html : on définit un scroll fluide pour que
+  les clics sur les liens d'ancrage (#section)
+  scrollent doucement au lieu de sauter.
+*/
+html {
+    scroll-behavior: smooth;
+}
+
+/*
+  body : on applique le fond noir, le texte blanc,
+  et la police par défaut (Inter pour la lisibilité).
+
+  line-height: 1.6 → l'espace entre les lignes.
+  1.6 est le standard pour une bonne lisibilité.
+  (1.0 = les lignes se touchent, 2.0 = double interligne)
+*/
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+
+    /* Améliore le rendu des polices sur macOS/Linux */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   TYPOGRAPHIE — Styles des titres
+   ============================================ */
+
+/*
+  Tous les titres utilisent la police monospace
+  pour donner un look "développeur".
+  font-weight: 700 = gras (bold).
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+/* ============================================
+   LIENS — Style par défaut
+   ============================================ */
+
+/*
+  text-decoration: none → supprime le soulignement.
+  transition → l'animation quand on survole le lien.
+*/
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+/*
+  a:hover → style quand la souris survole le lien.
+  C'est un "pseudo-class" CSS.
+*/
+a:hover {
+    color: var(--color-primary-light);
+}
+
+/* ============================================
+   IMAGES — Responsive par défaut
+   ============================================ */
+
+/*
+  max-width: 100% → l'image ne dépasse jamais
+  son conteneur. Essentiel pour le responsive.
+  display: block → supprime l'espace sous l'image
+  (les images sont inline par défaut).
+*/
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ============================================
+   UTILITAIRES — Classes réutilisables
+   ============================================ */
+
+/*
+  .container → Centre le contenu et limite
+  sa largeur max. padding-inline ajoute de l'espace
+  sur les côtés gauche et droit.
+*/
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    /* Centre horizontalement */
+    padding-inline: var(--space-lg);
+    /* Padding gauche/droite */
+}
+
+/*
+  .section → Espacement vertical entre les sections.
+  Chaque section du portfolio aura cette classe.
+*/
+.section {
+    padding-block: var(--space-2xl);
+    /* Padding haut/bas */
+}
+
+/*
+  .section-title → Style commun pour tous les titres
+  de section (À propos, Compétences, etc.)
+*/
+.section-title {
+    font-size: 2rem;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+/*
+  On colore le texte en vert Spring Boot avec
+  un span à l'intérieur du titre.
+  Exemple: <h2>Mes <span class="text-primary">Compétences</span></h2>
+*/
+.text-primary {
+    color: var(--color-primary);
+}
