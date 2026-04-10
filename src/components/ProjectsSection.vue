@@ -56,7 +56,7 @@ const projects = [
         Mes <span class="text-primary">projets</span>
       </h2>
 
-      <p class="projects-subtitle">
+      <p class="projects-subtitle" v-scroll-reveal>
         Projets réalisés chez LAO SARL
       </p>
 
@@ -67,9 +67,10 @@ const projects = [
       -->
       <div class="projects-grid">
         <article
-          v-for="project in projects"
+          v-for="(project, index) in projects"
           :key="project.name"
           class="project-card"
+          v-scroll-reveal="{ delay: index * 150 }"
         >
           <!--
             <article> est une balise HTML5 sémantique.

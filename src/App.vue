@@ -14,6 +14,7 @@ import AboutSection from './components/AboutSection.vue'
 import SkillsSection from './components/SkillsSection.vue'
 import ExperienceSection from './components/ExperienceSection.vue'
 import ProjectsSection from './components/ProjectsSection.vue'
+import ContactSection from './components/ContactSection.vue'
 </script>
 
 <template>
@@ -35,6 +36,7 @@ import ProjectsSection from './components/ProjectsSection.vue'
     <SkillsSection />
     <ExperienceSection />
     <ProjectsSection />
+    <ContactSection />
     <!-- Les prochaines sections seront ajoutées ici -->
   </main>
 </template>

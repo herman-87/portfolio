@@ -62,7 +62,7 @@ const strengths = [
         On utilise un <div> wrapper avec une classe pour
         limiter la largeur et centrer le texte.
       -->
-      <div class="about-intro">
+      <div class="about-intro" v-scroll-reveal>
         <p>
           Passionné par le développement backend depuis plus de 5 ans,
           je conçois des <strong class="text-primary">API robustes</strong> et des
@@ -89,9 +89,10 @@ const strengths = [
       -->
       <div class="about-grid">
         <div
-          v-for="item in strengths"
+          v-for="(item, index) in strengths"
           :key="item.title"
           class="about-card"
+          v-scroll-reveal="{ delay: index * 150 }"
         >
           <!--
             L'icône emoji dans un cercle.

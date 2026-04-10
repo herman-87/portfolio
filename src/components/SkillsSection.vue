@@ -85,7 +85,7 @@ const skillCategories = [
         Mes <span class="text-primary">compétences</span>
       </h2>
 
-      <p class="skills-subtitle">
+      <p class="skills-subtitle" v-scroll-reveal>
         Technologies et outils que j'utilise au quotidien
       </p>
 
@@ -107,6 +107,7 @@ const skillCategories = [
           v-for="(category, index) in skillCategories"
           :key="category.name"
           class="skills-category"
+          v-scroll-reveal="{ delay: index * 100 }"
         >
           <!--
             En-tête de la catégorie : icône + nom.

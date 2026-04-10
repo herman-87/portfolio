@@ -78,7 +78,7 @@ const yearsAtLao = computed(() => {
         Mon <span class="text-primary">parcours</span>
       </h2>
 
-      <p class="experience-subtitle">
+      <p class="experience-subtitle" v-scroll-reveal>
         Plus de {{ yearsAtLao }} ans d'expérience en développement backend
       </p>
 
@@ -103,6 +103,7 @@ const yearsAtLao = computed(() => {
           v-for="(exp, index) in experiences"
           :key="exp.company + exp.period"
           class="timeline-item"
+          v-scroll-reveal="{ delay: index * 200 }"
         >
           <!--
             Le point sur la timeline.

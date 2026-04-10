@@ -7,5 +7,12 @@ import { createApp } from 'vue'
 import './assets/main.css'
 
 import App from './App.vue'
+import { vScrollReveal } from './directives/scrollReveal.js'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+// Enregistrement global de la directive.
+// Elle sera utilisable partout avec "v-scroll-reveal"
+app.directive('scroll-reveal', vScrollReveal)
+
+app.mount('#app')
