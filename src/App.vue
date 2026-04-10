@@ -1,38 +1,49 @@
 <script setup>
-// Ce bloc contiendra bientôt nos imports de composants.
-// "setup" est la syntaxe moderne de Vue 3 (Composition API).
-// Tout ce qu'on déclare ici est automatiquement disponible
-// dans le <template> sans avoir à le retourner.
+// ================================================
+// IMPORTS DES COMPOSANTS
+// ================================================
+// On importe le composant NavBar.
+// Avec <script setup>, l'import suffit pour pouvoir
+// l'utiliser dans le <template> comme une balise HTML.
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <!--
-    La balise <main> est une balise HTML5 sémantique.
-    Elle indique le contenu PRINCIPAL de la page.
-    C'est important pour :
-    - L'accessibilité (les lecteurs d'écran la reconnaissent)
-    - Le SEO (Google sait où est le contenu important)
+    Structure de la page :
+    1. NavBar (fixe en haut)
+    2. <main> contient toutes les sections du portfolio
+    
+    Le padding-top sur <main> compense la hauteur
+    de la navbar fixe (70px), sinon le contenu
+    serait caché DERRIÈRE la navbar.
   -->
+  <NavBar />
+  
   <main id="app-main">
-    <h1>Herman Essoungou</h1>
-    <p>Développeur Java Spring Boot — Portfolio en construction 🚧</p>
+    <!-- Les sections seront ajoutées ici, une par une -->
+    <section class="section container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div>
+        <h1>Herman Essoungou</h1>
+        <p style="color: var(--color-text-secondary); margin-top: 1rem;">
+          Portfolio en construction — NavBar fonctionnelle ✅
+        </p>
+      </div>
+    </section>
   </main>
 </template>
 
 <style scoped>
 /*
-  CSS scoped = s'applique UNIQUEMENT à ce composant.
-  Ce style ne "fuitera" jamais vers d'autres composants.
+  padding-top: 70px → pousse le contenu vers le bas
+  pour qu'il ne soit pas caché derrière la navbar fixe.
   
-  Pour l'instant, on centre le contenu temporaire.
-  Ce style sera remplacé quand on ajoutera les vraies sections.
+  C'est un pattern classique avec les navbars en position: fixed.
+  La navbar "sort du flux" du document (elle flotte au-dessus),
+  donc le contenu ne sait pas qu'elle existe et commence à y=0.
+  Le padding compense ça.
 */
 #app-main {
-  min-height: 100vh;         /* vh = viewport height. 100vh = toute la hauteur de l'écran */
-  display: flex;             /* Active le mode Flexbox */
-  flex-direction: column;    /* Empile les enfants verticalement */
-  align-items: center;       /* Centre horizontalement */
-  justify-content: center;   /* Centre verticalement */
-  gap: var(--space-md);      /* Espace entre les éléments enfants */
+  padding-top: 70px;
 }
 </style>
