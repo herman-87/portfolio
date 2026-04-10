@@ -95,6 +95,7 @@
 */
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 70px; /* Compense la hauteur de la NavBar fixe */
 }
 
 /*
