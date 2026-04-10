@@ -1,78 +1,43 @@
 <script setup>
-// ================================================
-// IMPORTS
-// ================================================
-// reactive : comme ref(), mais pour les OBJETS.
-// Au lieu de créer 3 ref() séparées (name, email, message),
-// on regroupe tout dans un seul objet réactif.
 import { reactive, ref } from 'vue'
 
-// ================================================
-// DONNÉES RÉACTIVES
-// ================================================
-// L'objet formulaire avec reactive().
-// Chaque propriété est liée à un champ du formulaire
-// via v-model.
 const form = reactive({
   name: '',
   email: '',
   message: ''
 })
 
-// État de soumission
 const isSubmitted = ref(false)
 const isSubmitting = ref(false)
 
-// ================================================
-// DONNÉES STATIQUES — Infos de contact
-// ================================================
 const contactInfo = [
   {
-    icon: '📧',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
     label: 'Email',
     value: 'hermanessoungou@gmail.com',
     href: 'mailto:hermanessoungou@gmail.com'
   },
   {
-    icon: '📱',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
     label: 'Téléphone',
     value: '+237 671 952 927',
     href: 'tel:+237671952927'
   },
   {
-    icon: '📍',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>',
     label: 'Localisation',
     value: 'Douala, Cameroun',
     href: null
   }
 ]
 
-// ================================================
-// MÉTHODES
-// ================================================
-// Gère la soumission du formulaire.
-//
-// Pour l'instant, on simule l'envoi (pas de backend).
-// En production, on utiliserait fetch() ou axios
-// pour envoyer les données à une API.
-//
-// async/await → syntaxe JavaScript pour gérer les
-// opérations asynchrones (réseau, timers...).
-// "async" dit "cette fonction contient des await".
-// "await" dit "attends que cette opération finisse".
 async function handleSubmit() {
   isSubmitting.value = true
 
-  // Simule un appel réseau de 1.5 secondes.
-  // setTimeout retourne une Promise grâce à
-  // new Promise() → on peut "await" dessus.
   await new Promise(resolve => setTimeout(resolve, 1500))
 
-  // Affiche le résultat en console (pour debug)
   console.log('Formulaire soumis :', { ...form })
 
-  // Réinitialise le formulaire.
-  // On remet chaque champ à une chaîne vide.
   form.name = ''
   form.email = ''
   form.message = ''
@@ -80,7 +45,6 @@ async function handleSubmit() {
   isSubmitting.value = false
   isSubmitted.value = true
 
-  // Cache le message de succès après 5 secondes
   setTimeout(() => {
     isSubmitted.value = false
   }, 5000)
@@ -99,36 +63,10 @@ async function handleSubmit() {
         Un projet en tête ? N'hésitez pas à me contacter !
       </p>
 
-      <!--
-        Layout en 2 colonnes : formulaire + infos de contact.
-        Sur mobile, ça passe en 1 colonne grâce aux media queries.
-      -->
       <div class="contact-grid">
 
-        <!--
-          LE FORMULAIRE
-          
-          <form> est la balise HTML native pour les formulaires.
-          @submit.prevent → écoute la soumission ET empêche
-          le rechargement de la page (preventDefault).
-        -->
         <form class="contact-form" @submit.prevent="handleSubmit" v-scroll-reveal="{ delay: 100 }">
 
-          <!--
-            Champ NOM.
-            
-            <label> est associé à l'input via l'attribut "for"
-            qui correspond à l'attribut "id" de l'input.
-            Avantage : cliquer sur le label focus l'input.
-            C'est aussi essentiel pour l'accessibilité.
-            
-            v-model="form.name" → liaison bidirectionnelle.
-            Quand l'utilisateur tape, form.name se met à jour.
-            Quand form.name change (reset), l'input se vide.
-            
-            required → le navigateur empêche la soumission
-            si le champ est vide. C'est la validation HTML native.
-          -->
           <div class="form-group">
             <label for="contact-name" class="form-label">Nom</label>
             <input
@@ -141,13 +79,6 @@ async function handleSubmit() {
             >
           </div>
 
-          <!--
-            Champ EMAIL.
-            
-            type="email" → le navigateur vérifie le format
-            (doit contenir @ et un domaine).
-            Sur mobile, un clavier email spécial apparaît.
-          -->
           <div class="form-group">
             <label for="contact-email" class="form-label">Email</label>
             <input
@@ -160,15 +91,6 @@ async function handleSubmit() {
             >
           </div>
 
-          <!--
-            Champ MESSAGE.
-            
-            <textarea> est différent de <input> :
-            - <input> → une seule ligne
-            - <textarea> → plusieurs lignes
-            
-            rows="5" → hauteur initiale (5 lignes).
-          -->
           <div class="form-group">
             <label for="contact-message" class="form-label">Message</label>
             <textarea
@@ -181,17 +103,6 @@ async function handleSubmit() {
             ></textarea>
           </div>
 
-          <!--
-            BOUTON DE SOUMISSION.
-            
-            :disabled="isSubmitting" → le bouton est grisé
-            et non-cliquable pendant l'envoi.
-            C'est important pour éviter les doubles soumissions.
-            
-            v-if / v-else → affichage conditionnel.
-            Si isSubmitting est true, on montre "Envoi..."
-            Sinon, on montre "Envoyer".
-          -->
           <button
             type="submit"
             class="btn btn-primary btn-submit"
@@ -201,20 +112,12 @@ async function handleSubmit() {
             <span v-else>Envoyer le message</span>
           </button>
 
-          <!--
-            Message de succès — affiché après la soumission.
-            v-if="isSubmitted" → n'existe dans le DOM que si true.
-          -->
           <p v-if="isSubmitted" class="form-success">
             ✅ Message envoyé avec succès ! Je vous répondrai rapidement.
           </p>
 
         </form>
 
-        <!--
-          INFOS DE CONTACT — Colonne de droite.
-          Cards avec email, téléphone, localisation.
-        -->
         <div class="contact-info">
 
           <div
@@ -223,17 +126,9 @@ async function handleSubmit() {
             class="contact-info-card"
             v-scroll-reveal="{ delay: 200 + index * 100 }"
           >
-            <span class="contact-info-icon">{{ info.icon }}</span>
+            <div class="contact-info-icon" v-html="info.icon"></div>
             <div>
               <p class="contact-info-label">{{ info.label }}</p>
-              <!--
-                Rendu conditionnel avec v-if / v-else :
-                - Si info.href existe → on affiche un lien <a>
-                - Sinon → on affiche un simple <p>
-                
-                C'est logique : l'email et le téléphone sont
-                cliquables, mais la localisation ne l'est pas.
-              -->
               <a
                 v-if="info.href"
                 :href="info.href"
@@ -254,11 +149,6 @@ async function handleSubmit() {
     </div>
   </section>
 
-  <!--
-    FOOTER — Pied de page.
-    <footer> est une balise sémantique HTML5.
-    Elle contient les infos de copyright et de crédits.
-  -->
   <footer class="footer">
     <div class="container">
       <p class="footer-text">
@@ -271,9 +161,6 @@ async function handleSubmit() {
 </template>
 
 <style scoped>
-/* ============================================
-   SOUS-TITRE
-   ============================================ */
 
 .contact-subtitle {
   text-align: center;
@@ -282,18 +169,6 @@ async function handleSubmit() {
   margin-bottom: var(--space-xl);
 }
 
-/* ============================================
-   LAYOUT — Grille 2 colonnes
-   ============================================ */
-
-/*
-  2 colonnes : le formulaire prend 3fr (60%),
-  les infos prennent 2fr (40%).
-  
-  3fr + 2fr = 5 fractions totales.
-  3/5 = 60% pour le formulaire.
-  2/5 = 40% pour les infos.
-*/
 .contact-grid {
   display: grid;
   grid-template-columns: 3fr 2fr;
@@ -302,24 +177,10 @@ async function handleSubmit() {
   margin-inline: auto;
 }
 
-/* ============================================
-   FORMULAIRE
-   ============================================ */
-
-/*
-  .form-group → Conteneur pour un label + input.
-  C'est un pattern HTML classique pour les formulaires.
-*/
 .form-group {
   margin-bottom: var(--space-lg);
 }
 
-/*
-  Le label utilise la police monospace pour
-  garder le look développeur.
-  display: block → le label prend toute la largeur
-  (l'input passe en dessous, pas à côté).
-*/
 .form-label {
   display: block;
   font-family: var(--font-mono);
@@ -328,16 +189,6 @@ async function handleSubmit() {
   margin-bottom: var(--space-sm);
 }
 
-/*
-  L'input a un fond sombre et une bordure subtile.
-  
-  width: 100% → prend toute la largeur disponible.
-  outline: none → supprime le contour bleu par défaut
-  du navigateur au focus (on le remplace par notre propre style).
-  
-  MAIS on le remplace par un style custom au :focus
-  pour maintenir l'accessibilité.
-*/
 .form-input {
   width: 100%;
   padding: 0.85rem 1rem;
@@ -352,51 +203,24 @@ async function handleSubmit() {
               box-shadow var(--transition-fast);
 }
 
-/*
-  PLACEHOLDER — Le texte grisé dans l'input vide.
-  On le style pour qu'il soit discret mais lisible.
-  
-  ::placeholder est un pseudo-élément qui cible
-  uniquement le texte placeholder.
-*/
 .form-input::placeholder {
   color: var(--color-text-muted);
 }
 
-/*
-  :focus → quand l'utilisateur clique/tabule dans l'input.
-  On ajoute une bordure verte + un halo (glow) subtil.
-  
-  C'est ESSENTIEL pour l'accessibilité :
-  les utilisateurs au clavier doivent savoir
-  quel champ est actif.
-*/
 .form-input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(109, 179, 63, 0.15);
 }
 
-/*
-  Le textarea (zone de texte multiligne).
-  resize: vertical → l'utilisateur peut redimensionner
-  uniquement en hauteur (pas en largeur).
-  min-height → hauteur minimale.
-*/
 .form-textarea {
   resize: vertical;
   min-height: 120px;
 }
 
-/*
-  Le bouton de soumission occupe toute la largeur.
-  width: 100% → utile sur mobile.
-  
-  :disabled → style quand le bouton est désactivé
-  pendant l'envoi. opacity: 0.6 → grisé.
-  cursor: not-allowed → curseur "interdit".
-*/
 .btn-submit {
   width: 100%;
+  padding-block: 1rem;
+  font-size: 1rem;
 }
 
 .btn-submit:disabled {
@@ -405,7 +229,6 @@ async function handleSubmit() {
   transform: none;
 }
 
-/* Message de succès après soumission */
 .form-success {
   margin-top: var(--space-md);
   padding: var(--space-md);
@@ -416,10 +239,6 @@ async function handleSubmit() {
   font-size: 0.9rem;
   text-align: center;
 }
-
-/* ============================================
-   INFOS DE CONTACT — Colonne droite
-   ============================================ */
 
 .contact-info {
   display: flex;
@@ -443,8 +262,21 @@ async function handleSubmit() {
 }
 
 .contact-info-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(109, 179, 63, 0.1);
+  color: var(--color-primary);
+}
+
+.contact-info-icon :deep(svg) {
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary);
 }
 
 .contact-info-label {
@@ -461,10 +293,6 @@ async function handleSubmit() {
   font-size: 0.95rem;
 }
 
-/* ============================================
-   FOOTER — Pied de page
-   ============================================ */
-
 .footer {
   padding-block: var(--space-lg);
   border-top: 1px solid var(--color-border);
@@ -476,10 +304,6 @@ async function handleSubmit() {
   font-size: 0.85rem;
   color: var(--color-text-muted);
 }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 
 @media (max-width: 768px) {
   .contact-grid {

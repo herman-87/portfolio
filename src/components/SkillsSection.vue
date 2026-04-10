@@ -1,18 +1,8 @@
 <script setup>
-// ================================================
-// DONNÉES — Compétences groupées par catégorie
-// ================================================
-// Structure : tableau d'objets, chaque objet contient
-// un nom de catégorie et un tableau de compétences.
-//
-// Cette structure "imbriquée" (tableau dans un objet
-// dans un tableau) est très courante en programmation.
-// En Java, ce serait :
-// List<SkillCategory> où SkillCategory a un List<String> skills
 const skillCategories = [
   {
     name: 'Java / Spring Boot',
-    icon: '☕',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>',
     skills: [
       'Java 8 / 11 / 17 / 21 / 25',
       'Spring Boot',
@@ -28,7 +18,7 @@ const skillCategories = [
   },
   {
     name: 'Bases de données',
-    icon: '🗄️',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>',
     skills: [
       'PostgreSQL',
       'MySQL',
@@ -39,7 +29,7 @@ const skillCategories = [
   },
   {
     name: 'Architecture & Patterns',
-    icon: '🏗️',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-blocks"><rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/></svg>',
     skills: [
       'Microservices',
       'Event Sourcing',
@@ -52,7 +42,7 @@ const skillCategories = [
   },
   {
     name: 'CI/CD & DevOps',
-    icon: '🚀',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
     skills: [
       'Docker',
       'Git / GitHub',
@@ -64,7 +54,7 @@ const skillCategories = [
   },
   {
     name: 'Outils & Autres',
-    icon: '🔧',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
     skills: [
       'IntelliJ IDEA',
       'Postman',
@@ -89,19 +79,6 @@ const skillCategories = [
         Technologies et outils que j'utilise au quotidien
       </p>
 
-      <!--
-        Grille des catégories de compétences.
-        
-        v-for avec (category, index) :
-        - category → l'objet courant
-        - index → sa position dans le tableau (0, 1, 2...)
-        
-        :style → on utilise l'index pour créer un délai
-        d'animation différent pour chaque catégorie.
-        Le calcul : index × 0.1s
-        → Cat 1: 0s, Cat 2: 0.1s, Cat 3: 0.2s...
-        Cela crée un effet de cascade visuel.
-      -->
       <div class="skills-grid">
         <div
           v-for="(category, index) in skillCategories"
@@ -109,27 +86,11 @@ const skillCategories = [
           class="skills-category"
           v-scroll-reveal="{ delay: index * 100 }"
         >
-          <!--
-            En-tête de la catégorie : icône + nom.
-          -->
           <div class="skills-category-header">
-            <span class="skills-category-icon">{{ category.icon }}</span>
+            <div class="skills-category-icon" v-html="category.icon"></div>
             <h3 class="skills-category-title">{{ category.name }}</h3>
           </div>
 
-          <!--
-            Liste des compétences sous forme de badges.
-            
-            v-for IMBRIQUÉ : on boucle sur category.skills
-            (le tableau à l'intérieur de l'objet category).
-            
-            :key="skill" → chaque nom de compétence est unique,
-            donc il sert de clé.
-            
-            C'est notre première double boucle :
-            - Boucle externe : les catégories (Java, BDD, CI/CD...)
-            - Boucle interne : les compétences dans chaque catégorie
-          -->
           <div class="skills-badges">
             <span
               v-for="skill in category.skills"
@@ -148,9 +109,6 @@ const skillCategories = [
 </template>
 
 <style scoped>
-/* ============================================
-   SOUS-TITRE
-   ============================================ */
 
 .skills-subtitle {
   text-align: center;
@@ -159,36 +117,11 @@ const skillCategories = [
   margin-bottom: var(--space-xl);
 }
 
-/* ============================================
-   GRILLE DES CATÉGORIES
-   ============================================ */
-
-/*
-  On utilise CSS Grid avec une technique avancée :
-  repeat(auto-fit, minmax(300px, 1fr))
-  
-  Décomposons :
-  - auto-fit → crée autant de colonnes que possible
-  - minmax(300px, 1fr) → chaque colonne fait MINIMUM 300px
-    et MAXIMUM 1fr (partage de l'espace)
-  
-  Résultat : la grille s'adapte AUTOMATIQUEMENT !
-  - Grand écran : 3 colonnes
-  - Tablette : 2 colonnes
-  - Mobile : 1 colonne
-  
-  Et tout ça SANS media queries ! C'est la technique
-  CSS Grid la plus puissante pour le responsive.
-*/
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-lg);
 }
-
-/* ============================================
-   CATÉGORIE — Card pour chaque groupe
-   ============================================ */
 
 .skills-category {
   background-color: var(--color-bg-secondary);
@@ -202,32 +135,25 @@ const skillCategories = [
   border-color: var(--color-primary);
 }
 
-/* ============================================
-   EN-TÊTE DE CATÉGORIE — Icône + Titre
-   ============================================ */
-
-/*
-  Flexbox pour aligner l'icône et le titre
-  côte à côte sur la même ligne.
-*/
 .skills-category-header {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
 
-  /*
-    padding-bottom + border-bottom → crée une ligne
-    de séparation sous l'en-tête.
-    C'est un pattern design pour séparer visuellement
-    le titre du contenu.
-  */
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--color-border);
 }
 
 .skills-category-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.skills-category-icon :deep(svg) {
+  color: var(--color-primary);
 }
 
 .skills-category-title {
@@ -235,37 +161,12 @@ const skillCategories = [
   font-weight: 600;
 }
 
-/* ============================================
-   BADGES — Chaque compétence
-   ============================================ */
-
-/*
-  flex-wrap: wrap → les badges passent à la ligne
-  quand il n'y a plus de place. Sans ça, ils
-  déborderaient de la card sur une seule ligne.
-*/
 .skills-badges {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
 
-/*
-  Chaque badge est un petit rectangle arrondi
-  avec un fond semi-transparent vert.
-  
-  Le design "badge" est très courant pour afficher
-  des tags, labels, ou compétences.
-  
-  padding: vertical horizontal → plus de padding
-  sur les côtés que en haut/bas pour un look pilule.
-  
-  font-size: 0.8rem → plus petit que le texte normal
-  pour ne pas dominer visuellement.
-  
-  user-select: none → empêche la sélection du texte
-  au clic. Les badges ne sont pas du contenu à copier.
-*/
 .skills-badge {
   display: inline-block;
   padding: 0.35rem 0.85rem;
@@ -280,33 +181,12 @@ const skillCategories = [
   user-select: none;
 }
 
-/*
-  Au hover sur un badge :
-  - Le fond devient plus opaque (15%)
-  - La bordure devient plus visible (40%)
-  - Le badge "grandit" légèrement (scale 1.05)
-  
-  scale() est une fonction de transform.
-  1 = taille normale, 1.05 = 5% plus grand.
-  C'est très subtil mais ça rend les badges "vivants".
-*/
 .skills-badge:hover {
   background-color: rgba(109, 179, 63, 0.15);
   border-color: rgba(109, 179, 63, 0.4);
   transform: scale(1.05);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-/*
-  On n'a PAS BESOIN de media queries ici grâce à
-  auto-fit + minmax ! La grille s'adapte toute seule.
-  
-  Mais on va ajuster le minmax pour les très petits
-  écrans où 300px est trop large.
-*/
 @media (max-width: 400px) {
   .skills-grid {
     grid-template-columns: 1fr;

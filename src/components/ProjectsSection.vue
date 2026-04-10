@@ -1,13 +1,4 @@
 <script setup>
-// ================================================
-// DONNÉES — Projets
-// ================================================
-// Chaque projet a :
-// - name : nom du projet
-// - description : description courte
-// - role : ton rôle dans le projet
-// - technologies : tableau de technologies utilisées
-// - highlights : tableau de points saillants (fonctionnalités clés)
 const projects = [
   {
     name: 'Suku',
@@ -60,11 +51,6 @@ const projects = [
         Projets réalisés chez LAO SARL
       </p>
 
-      <!--
-        Grille de cards de projets.
-        On utilise CSS Grid avec auto-fit pour
-        une grille responsive automatique.
-      -->
       <div class="projects-grid">
         <article
           v-for="(project, index) in projects"
@@ -72,40 +58,16 @@ const projects = [
           class="project-card"
           v-scroll-reveal="{ delay: index * 150 }"
         >
-          <!--
-            <article> est une balise HTML5 sémantique.
-            Elle représente un contenu autonome et indépendant
-            (un projet est un "article" en soi).
-            C'est mieux qu'un <div> pour le SEO.
-          -->
 
-          <!--
-            En-tête de la card.
-            Contient la catégorie et le nom du projet.
-            Le fond est légèrement teinté en vert avec le gradient.
-          -->
           <div class="project-card-header">
             <span class="project-category">{{ project.category }}</span>
             <h3 class="project-name">{{ project.name }}</h3>
             <p class="project-role">{{ project.role }}</p>
           </div>
 
-          <!--
-            Corps de la card.
-          -->
           <div class="project-card-body">
             <p class="project-description">{{ project.description }}</p>
 
-            <!--
-              Points saillants du projet.
-              
-              <ul> est une "unordered list" (liste non ordonnée).
-              <li> est un "list item" (élément de liste).
-              
-              C'est sémantiquement correct : une liste de
-              fonctionnalités EST une liste non ordonnée.
-              Un <div> avec des <p> serait incorrect ici.
-            -->
             <ul class="project-highlights">
               <li
                 v-for="highlight in project.highlights"
@@ -116,10 +78,6 @@ const projects = [
               </li>
             </ul>
 
-            <!--
-              Technologies du projet en badges.
-              Même pattern visuel que dans les autres sections.
-            -->
             <div class="project-techs">
               <span
                 v-for="tech in project.technologies"
@@ -139,9 +97,6 @@ const projects = [
 </template>
 
 <style scoped>
-/* ============================================
-   SOUS-TITRE
-   ============================================ */
 
 .projects-subtitle {
   text-align: center;
@@ -150,30 +105,12 @@ const projects = [
   margin-bottom: var(--space-xl);
 }
 
-/* ============================================
-   GRILLE DES PROJETS
-   ============================================ */
-
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: var(--space-lg);
 }
 
-/* ============================================
-   PROJECT CARD
-   ============================================ */
-
-/*
-  overflow: hidden → ESSENTIEL ici.
-  
-  Le header a un fond coloré qui touche les bords de la card.
-  Sans overflow: hidden, ce fond dépasserait des coins
-  arrondis (border-radius) de la card.
-  
-  Avec overflow: hidden, tout ce qui dépasse est coupé,
-  et le header respecte les coins arrondis du parent.
-*/
 .project-card {
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
@@ -184,31 +121,12 @@ const projects = [
               box-shadow var(--transition-normal);
 }
 
-/*
-  Au hover, on combine 3 effets :
-  1. Lévitation (translateY -6px)
-  2. Bordure verte
-  3. Ombre portée verte (glow effect)
-  
-  Les 3 changent en même temps grâce aux transitions
-  définies ci-dessus.
-*/
 .project-card:hover {
   transform: translateY(-6px);
   border-color: var(--color-primary);
   box-shadow: 0 10px 40px rgba(109, 179, 63, 0.15);
 }
 
-/* ============================================
-   HEADER DE LA CARD
-   ============================================ */
-
-/*
-  Le header a un fond avec un dégradé subtil vert.
-  rgba(..., 0.05) → très très léger (5% d'opacité).
-  
-  border-bottom → sépare visuellement le header du body.
-*/
 .project-card-header {
   padding: var(--space-lg);
   background: linear-gradient(
@@ -220,16 +138,6 @@ const projects = [
   transition: background var(--transition-normal);
 }
 
-/*
-  PARENT:HOVER → ENFANT
-  
-  Quand la CARD est survolée, le fond du HEADER
-  s'intensifie. C'est un effet coordonné.
-  
-  Le sélecteur ".project-card:hover .project-card-header"
-  signifie : quand .project-card est en :hover,
-  applique ce style à .project-card-header (son enfant).
-*/
 .project-card:hover .project-card-header {
   background: linear-gradient(
     135deg,
@@ -258,10 +166,6 @@ const projects = [
   font-size: 0.9rem;
 }
 
-/* ============================================
-   BODY DE LA CARD
-   ============================================ */
-
 .project-card-body {
   padding: var(--space-lg);
 }
@@ -273,14 +177,6 @@ const projects = [
   margin-bottom: var(--space-lg);
 }
 
-/* ============================================
-   HIGHLIGHTS — Liste des fonctionnalités
-   ============================================ */
-
-/*
-  list-style: none → supprime les puces par défaut.
-  On va créer nos propres puces avec ::before.
-*/
 .project-highlights {
   list-style: none;
   margin-bottom: var(--space-lg);
@@ -295,18 +191,6 @@ const projects = [
   margin-bottom: var(--space-sm);
 }
 
-/*
-  Puces personnalisées avec ::before.
-  Au lieu des puces noires standard, on affiche
-  un petit chevron vert "▹".
-  
-  content: '▹' → le caractère à afficher.
-  position: absolute + left: 0 → positionné à gauche.
-  color: primary → vert Spring Boot.
-  
-  C'est une technique très courante pour remplacer
-  les puces HTML par défaut par quelque chose de custom.
-*/
 .project-highlight::before {
   content: '▹';
   position: absolute;
@@ -314,10 +198,6 @@ const projects = [
   color: var(--color-primary);
   font-size: 1.1rem;
 }
-
-/* ============================================
-   BADGES TECHNOLOGIES
-   ============================================ */
 
 .project-techs {
   display: flex;
@@ -336,10 +216,6 @@ const projects = [
   font-size: 0.75rem;
   font-weight: 500;
 }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 
 @media (max-width: 400px) {
   .projects-grid {

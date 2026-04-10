@@ -1,18 +1,6 @@
 <script setup>
-// ================================================
-// IMPORTS
-// ================================================
 import { computed } from 'vue'
 
-// ================================================
-// DONNÉES — Expériences professionnelles
-// ================================================
-// Chaque expérience a une période, un poste, une entreprise,
-// une description, et une liste de projets réalisés.
-//
-// Les projets eux-mêmes sont des objets avec nom,
-// description et technologies. C'est de l'imbrication
-// sur 3 niveaux : tableau → objet → tableau → objet.
 const experiences = [
   {
     period: 'Octobre 2021 — Présent',
@@ -50,21 +38,9 @@ const experiences = [
   }
 ]
 
-
-// ================================================
-// COMPUTED — Propriété calculée
-// ================================================
-// Calcule dynamiquement le nombre d'années d'expérience.
-// computed() recalcule automatiquement si les dépendances
-// changent (ici, la date change chaque jour, mais en
-// pratique le recalcul se fait au rechargement de la page).
-//
-// C'est mieux que de coder "5 ans" en dur, car la valeur
-// sera toujours à jour sans maintenance.
 const yearsAtLao = computed(() => {
   const startDate = new Date(2021, 9) // Mois 9 = Octobre (0-indexé en JS !)
   const now = new Date()
-  // Différence en millisecondes → convertie en années
   const diffInYears = (now - startDate) / (365.25 * 24 * 60 * 60 * 1000)
   return Math.floor(diffInYears)
 })
@@ -82,66 +58,30 @@ const yearsAtLao = computed(() => {
         Plus de {{ yearsAtLao }} ans d'expérience en développement backend
       </p>
 
-      <!--
-        LA TIMELINE
-        
-        La div .timeline contient la ligne verticale (via ::before)
-        et toutes les cards d'expérience.
-        
-        position: relative est ESSENTIEL ici car :
-        1. Le ::before (ligne verticale) est en position: absolute
-        2. Les points de la timeline sont en position: absolute
-        Tous se positionnent PAR RAPPORT à ce parent relative.
-      -->
       <div class="timeline">
 
-        <!--
-          On boucle sur les expériences.
-          Chaque expérience génère une card dans la timeline.
-        -->
         <div
           v-for="(exp, index) in experiences"
           :key="exp.company + exp.period"
           class="timeline-item"
           v-scroll-reveal="{ delay: index * 200 }"
         >
-          <!--
-            Le point sur la timeline.
-            C'est un <span> vide positionné en absolute
-            pile sur la ligne verticale.
-          -->
           <span class="timeline-dot"></span>
 
-          <!--
-            La card de l'expérience.
-          -->
           <div class="timeline-card">
 
-            <!-- En-tête : période + lieu -->
             <div class="timeline-card-header">
               <span class="timeline-period">{{ exp.period }}</span>
               <span class="timeline-location">📍 {{ exp.location }}</span>
             </div>
 
-            <!-- Rôle et entreprise -->
             <h3 class="timeline-role">{{ exp.role }}</h3>
             <p class="timeline-company">
               chez <span class="text-primary">{{ exp.company }}</span>
             </p>
 
-            <!-- Description -->
             <p class="timeline-description">{{ exp.description }}</p>
 
-            <!--
-              MISSIONS — Liste des responsabilités.
-              On utilise v-if pour ne montrer la section que
-              si l'expérience a des missions définies.
-              
-              v-if est une DIRECTIVE CONDITIONNELLE :
-              elle affiche l'élément UNIQUEMENT si la condition est true.
-              Si exp.missions existe et a des éléments → on affiche.
-              Si c'est undefined ou vide → on n'affiche pas.
-            -->
             <div v-if="exp.missions && exp.missions.length" class="timeline-missions">
               <h4 class="timeline-missions-title">Missions principales</h4>
               <ul class="timeline-missions-list">
@@ -155,16 +95,6 @@ const yearsAtLao = computed(() => {
               </ul>
             </div>
 
-            <!--
-              PROJETS — Boucle imbriquée sur exp.projects
-              
-              3 niveaux d'imbrication :
-              experiences → exp.projects → project.technologies
-              
-              C'est la structure la plus complexe qu'on ait
-              utilisée jusqu'ici. Chaque niveau de v-for a
-              sa propre :key unique.
-            -->
             <div class="timeline-projects">
               <h4 class="timeline-projects-title">Projets réalisés</h4>
 
@@ -176,7 +106,6 @@ const yearsAtLao = computed(() => {
                 <h5 class="timeline-project-name">{{ project.name }}</h5>
                 <p class="timeline-project-desc">{{ project.description }}</p>
 
-                <!-- 3ème niveau de v-for : les technologies du projet -->
                 <div class="timeline-project-techs">
                   <span
                     v-for="tech in project.technologies"
@@ -198,9 +127,6 @@ const yearsAtLao = computed(() => {
 </template>
 
 <style scoped>
-/* ============================================
-   SOUS-TITRE
-   ============================================ */
 
 .experience-subtitle {
   text-align: center;
@@ -209,17 +135,6 @@ const yearsAtLao = computed(() => {
   margin-bottom: var(--space-xl);
 }
 
-/* ============================================
-   TIMELINE — Conteneur principal
-   ============================================ */
-
-/*
-  position: relative → crée le repère pour les
-  éléments absolute (ligne, points).
-  
-  padding-left: 40px → laisse de la place à gauche
-  pour la ligne verticale et les points.
-*/
 .timeline {
   position: relative;
   padding-left: 40px;
@@ -227,20 +142,6 @@ const yearsAtLao = computed(() => {
   margin-inline: auto;
 }
 
-/*
-  LA LIGNE VERTICALE de la timeline.
-  
-  Créée entièrement en CSS avec ::before.
-  Aucun élément HTML nécessaire !
-  
-  position: absolute → se positionne par rapport à .timeline
-  left: 15px → décalée à 15px du bord gauche
-  top/bottom: 0 → s'étend sur toute la hauteur
-  width: 2px → ligne fine
-  
-  Le gradient fait que la ligne s'estompe en bas
-  (du vert vers le transparent).
-*/
 .timeline::before {
   content: '';
   position: absolute;
@@ -256,47 +157,15 @@ const yearsAtLao = computed(() => {
   );
 }
 
-/* ============================================
-   TIMELINE ITEM — Chaque expérience
-   ============================================ */
-
-/*
-  position: relative → nécessaire pour positionner
-  le point (timeline-dot) par rapport à cet item.
-  
-  margin-bottom: var(--space-xl) → espace entre
-  les expériences sur la timeline.
-*/
 .timeline-item {
   position: relative;
   margin-bottom: var(--space-xl);
 }
 
-/* Supprime le margin du dernier item */
 .timeline-item:last-child {
   margin-bottom: 0;
 }
 
-/* ============================================
-   TIMELINE DOT — Le point sur la ligne
-   ============================================ */
-
-/*
-  Le point se positionne EN ABSOLU par rapport
-  au .timeline-item (son parent relative).
-  
-  left: -25px → décalé à gauche pour tomber
-  pile sur la ligne verticale.
-  
-  Le calcul : .timeline a padding-left: 40px,
-  le ::before a left: 15px.
-  Le point doit être à 15px du bord, soit à
-  15px - 40px = -25px du contenu.
-  
-  width/height: 12px + border-radius: 50% → cercle.
-  border: 2px solid → contour vert.
-  box-shadow → halo lumineux autour du point.
-*/
 .timeline-dot {
   position: absolute;
   left: -25px;
@@ -310,10 +179,6 @@ const yearsAtLao = computed(() => {
   z-index: 1;
 }
 
-/* ============================================
-   TIMELINE CARD — La carte d'expérience
-   ============================================ */
-
 .timeline-card {
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
@@ -326,14 +191,6 @@ const yearsAtLao = computed(() => {
   border-color: var(--color-primary);
 }
 
-/* ============================================
-   EN-TÊTE DE LA CARD
-   ============================================ */
-
-/*
-  justify-content: space-between → pousse la période
-  à gauche et le lieu à droite.
-*/
 .timeline-card-header {
   display: flex;
   justify-content: space-between;
@@ -373,10 +230,6 @@ const yearsAtLao = computed(() => {
   margin-bottom: var(--space-lg);
 }
 
-/* ============================================
-   MISSIONS — Responsabilités
-   ============================================ */
-
 .timeline-missions {
   margin-bottom: var(--space-lg);
 }
@@ -413,10 +266,6 @@ const yearsAtLao = computed(() => {
   font-size: 1.1rem;
 }
 
-/* ============================================
-   PROJETS — Dans chaque expérience
-   ============================================ */
-
 .timeline-projects-title {
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -428,12 +277,6 @@ const yearsAtLao = computed(() => {
   border-bottom: 1px solid var(--color-border);
 }
 
-/*
-  Chaque projet dans l'expérience.
-  padding-left + border-left → crée un petit
-  indicateur visuel sur le côté gauche.
-  C'est un pattern "liste indentée avec accent".
-*/
 .timeline-project {
   padding-left: var(--space-md);
   border-left: 2px solid var(--color-border);
@@ -462,20 +305,12 @@ const yearsAtLao = computed(() => {
   margin-bottom: var(--space-sm);
 }
 
-/* ============================================
-   BADGES TECHNOLOGIES
-   ============================================ */
-
 .timeline-project-techs {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
 }
 
-/*
-  Badges plus petits que ceux de la section Skills.
-  On réutilise le même pattern visuel mais en plus compact.
-*/
 .timeline-tech-badge {
   display: inline-block;
   padding: 0.2rem 0.6rem;
@@ -486,10 +321,6 @@ const yearsAtLao = computed(() => {
   font-size: 0.7rem;
   font-weight: 500;
 }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 
 @media (max-width: 600px) {
   .timeline {
