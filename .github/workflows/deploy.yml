@@ -1,0 +1,89 @@
+# === WORKFLOW DE DÉPLOIEMENT GITHUB PAGES ===
+#
+# Ce script YAML ("Yet Another Markup Language") indique
+# à GitHub Actions ce qu'il doit faire pour construire et
+# déployer notre application automatiquement.
+#
+# Concepts DevOps couverts :
+# - "on: push" = déclenchement (trigger) automatique
+# - "jobs" = les tâches à exécuter
+# - "runs-on: ubuntu-latest" = la machine virtuelle utilisée
+# - "steps" = les étapes séquentielles
+#
+# Ce qu'il fait concrètement :
+# 1. Copie le code source
+# 2. Installe NodeJS
+# 3. Fait npm ci (équivalent strict de npm install)
+# 4. Fait npm run build (crée le dossier /dist)
+# 5. Déploie le dossier /dist sur GitHub Pages
+
+name: Déploiement du Portfolio sur GitHub Pages
+
+on:
+  # Se déclenche à chaque push sur la branche spécifiée
+  push:
+    branches: ["master"]
+  
+  # Permet aussi de lancer le processus manuellement depuis l'UI GitHub
+  workflow_dispatch:
+
+# Permissions obligatoires pour pouvoir publier sur GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# S'assure qu'un seul déploiement tourne à la fois.
+# Si tu pousses 2 fois très vite, il annulera le 1er déploiement.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Le job s'appelle "deploy"
+  deploy:
+    # URL de l'environnement générée à la fin
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    # On tourne sur un serveur Linux (Ubuntu) gratuit de GitHub
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Étape 1 : Récupérer ton code depuis GitHub
+      - name: Checkout du code source
+        uses: actions/checkout@v4
+
+      # Étape 2 : Installer Node.js sur la machine (comme sur ton PC)
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Étape 3 : Installer les dépendances (node_modules)
+      # On utilise npm ci car c'est plus rapide et garanti de
+      # respecter parfaitement le package-lock.json
+      - name: Installation des dépendances
+        run: npm ci
+
+      # Étape 4 : Compiler Vue.js vers du HTML/CSS/JS statique
+      # Le résultat ira dans le dossier /dist
+      - name: Compilation du projet (Build)
+        run: npm run build
+
+      # Étape 5 : Préparation pour GitHub Pages
+      - name: Configuration GitHub Pages
+        uses: actions/configure-pages@v4
+
+      # Étape 6 : Préparer l'archive à envoyer (le dossier dist généré)
+      - name: Upload de l'artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      # Étape 7 : Publication effective
+      - name: Déploiement 🔥
+        id: deployment
+        uses: actions/deploy-pages@v4
