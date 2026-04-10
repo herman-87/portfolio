@@ -24,9 +24,15 @@ const contactInfo = [
     href: 'tel:+237671952927'
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>',
+    label: 'LinkedIn',
+    value: 'Essoungou Herman',
+    href: 'https://www.linkedin.com/in/essoungou-herman-40776723b'
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>',
     label: 'Localisation',
-    value: 'Douala, Cameroun',
+    value: 'Douala, Logpom',
     href: null
   }
 ]
@@ -132,6 +138,7 @@ async function handleSubmit() {
               <a
                 v-if="info.href"
                 :href="info.href"
+                :target="info.href.startsWith('http') ? '_blank' : '_self'"
                 class="contact-info-value"
               >
                 {{ info.value }}
@@ -143,6 +150,16 @@ async function handleSubmit() {
           </div>
 
         </div>
+
+        <a 
+          href="/CV_Herman_Essoungou.pdf" 
+          download="CV_Herman_Essoungou.pdf" 
+          class="btn btn-outline cv-btn"
+          v-scroll-reveal="{ delay: 500 }"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Télécharger mon CV
+        </a>
 
       </div>
 
@@ -291,6 +308,13 @@ async function handleSubmit() {
 .contact-info-value {
   color: var(--color-text);
   font-size: 0.95rem;
+  word-break: break-all;
+}
+
+.cv-btn {
+  width: 100%;
+  margin-top: 1rem;
+  gap: 0.5rem;
 }
 
 .footer {
