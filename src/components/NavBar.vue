@@ -52,17 +52,19 @@ function toggleMobileMenu() {
         <span></span>
       </button>
 
-      <div class="navbar-mobile" :class="{ 'open': isMobileMenuOpen }">
-        <a
-          v-for="link in navLinks"
-          :key="'mobile-' + link.id"
-          :href="link.href"
-          class="navbar-mobile-link"
-          @click="closeMobileMenu"
-        >
-          {{ link.label }}
-        </a>
-      </div>
+      <Teleport to="body">
+        <div class="navbar-mobile" :class="{ 'open': isMobileMenuOpen }">
+          <a
+            v-for="link in navLinks"
+            :key="'mobile-' + link.id"
+            :href="link.href"
+            class="navbar-mobile-link"
+            @click="closeMobileMenu"
+          >
+            {{ link.label }}
+          </a>
+        </div>
+      </Teleport>
 
     </div>
   </nav>
@@ -170,9 +172,9 @@ function toggleMobileMenu() {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  z-index: 990;
   background-color: rgba(13, 13, 13, 0.98);
   flex-direction: column;
   align-items: center;
